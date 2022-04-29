@@ -1,23 +1,24 @@
 <?php
 	include "cnx.php";
 	$request_method = $_SERVER["REQUEST_METHOD"];
+	header("Access-Control-Allow-Origin: *");
 	
 	function getLists() {
 		global $cnx;
 		$sql = $cnx->prepare("select idList, nomList from list");
 		$sql->execute();
-		$reponse = [];
+		$response = [];
 		
 		foreach($sql->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$list = [
 				'id' => $row['idList'],
 				'name' => $row['nomList'],
 			];
-			$reponse[] = $list;
+			$response[] = $list;
 		}
 
 		header('Content-Type: application/json');
-		echo json_encode($reponse);
+		echo json_encode($response);
 	}
 
 	function insert() {
@@ -63,6 +64,9 @@
 			break;
 		case 'PUT':
 			update();
+			break;
+		case 'DELETE':
+			delete();
 			break;
 		default:
 			header("HTTP/1.0 405 Method Not Allowed");
