@@ -2,13 +2,14 @@
 	include "cnx.php";
 	$request_method = $_SERVER["REQUEST_METHOD"];
 	header("Access-Control-Allow-Origin: *");
-	
-	function getTaches() {
+		
+	function getTaches($idList) {
 		global $cnx;
-		$sql = $cnx->prepare("select idtache, nomtache from tache");
+		$sql = $cnx->prepare("select idTache, nomTache, idType, idList from tache where idList = ?");
+		$sql->bindValue(1, $idList);
 		$sql->execute();
 		$response = [];
-		
+
 		foreach($sql->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$tache = [
 				'id' => $row['idTache'],
@@ -63,7 +64,7 @@
 	switch($request_method)
 	{
 		case 'GET':
-			getTaches();
+			getTaches($_GET['idList']);
 			break;
 		case 'POST':
 			insert();
