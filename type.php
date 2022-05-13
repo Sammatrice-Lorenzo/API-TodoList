@@ -12,7 +12,7 @@
 		foreach($sql->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$type = [
 				'id' => $row['idType'],
-				'nom' => $row['nomType'],
+				'name' => $row['nomType'],
 				'idparent' => $row['idParent'],
 			];
 			$response[] = $type;

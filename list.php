@@ -12,7 +12,7 @@
 		foreach($sql->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$list = [
 				'id' => $row['idList'],
-				'nom' => $row['nomList'],
+				'name' => $row['nomList'],
 			];
 			$response[] = $list;
 		}

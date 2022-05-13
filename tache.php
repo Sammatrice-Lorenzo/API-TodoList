@@ -13,7 +13,7 @@
 		foreach($sql->fetchAll(PDO::FETCH_ASSOC) as $row) {
 			$tache = [
 				'id' => $row['idTache'],
-				'nom' => $row['nomTache'],
+				'name' => $row['nomTache'],
 				'idtype' => $row['idType'],
 				'idlist' => $row['idList'],
 			];
