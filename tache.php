@@ -45,9 +45,9 @@
 		$json_str = file_get_contents('php://input');
 		$tache = json_decode($json_str);
 
-		$sql = $cnx->prepare("INSERT INTO tache (nomtache, idtype, idlist) VALUES (?, ?, ?)");
+		$sql = $cnx->prepare("INSERT INTO tache (nomTache, idType, idList) VALUES (?, ?, ?)");
 		$sql->bindValue(1, $tache->nom);
-		$sql->bindValue(2, $tache->idtype);
+		$sql->bindValue(2, $tache->idType);
 		$sql->bindValue(3, $tache->idlist);
 		$sql->execute();
 	}
@@ -58,9 +58,9 @@
 		$json_str = file_get_contents('php://input');
 		$tache = json_decode($json_str);
 		
-		$sql= $cnx->prepare("UPDATE tache set nomtache = ?, idType = ?, idList = ? where idtache = ?");
+		$sql= $cnx->prepare("UPDATE tache set nomTache = ?, idType = ?, idList = ? where idTache = ?");
 		$sql->bindValue(1, $tache->nom);
-		$sql->bindValue(2, $tache->idtype);
+		$sql->bindValue(2, $tache->idType);
 		$sql->bindValue(3, $tache->idlist);
 		$sql->bindValue(4, $tache->id);
 		$sql->execute();
@@ -72,7 +72,7 @@
 		$json_str = file_get_contents('php://input');
 		$tache = json_decode($json_str);
 		
-		$sql= $cnx->prepare("DELETE FROM tache where idtache = ?");
+		$sql= $cnx->prepare("DELETE FROM tache where idTache = ?");
 		$sql->bindValue(1, $tache->id);
 		$sql->execute();
 	}
