@@ -1,8 +1,6 @@
 <?php
 	include "cnx.php";
 	$request_method = $_SERVER["REQUEST_METHOD"];
-	// header("Access-Control-Allow-Origin: *");
-
 	
 	if (isset($_SERVER['HTTP_ORIGIN'])) {
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -55,25 +53,30 @@
 		global $cnx;
 		$json_str = file_get_contents('php://input');
 		$list = json_decode($json_str);
+		var_dump($list);
 
 		$sql= $cnx->prepare("UPDATE list set nomList = ? where idList = ?");
 		$sql->bindValue(1, $list->nom);
-		$sql->bindValue(2, $list->id);
+		$sql->bindValue(2, $list->idList);
 		$sql->execute();
 	}
 	
-	function delete() {
+	function delete($idList) {
 		global $cnx;
-		
-		$json_str = file_get_contents('php://input');
-		$list = json_decode($json_str);
+		$var = parse_str(file_get_contents('php://input'), $_DELETE);
 
-		$sqlTaches = $cnx->prepare("DELETE FROM tache where idList = ?");
-		$sqlTaches->bindValue(1, $list->id);
-		$sqlTaches->execute();
+		$sql = $cnx->prepare("SELECT * from tache where idList = ?");
+		$sql->bindValue(1, $idList);
+		$sql->execute();
+
+		if(sizeof($sql->fetchAll()) > 0) {
+			$sqlTaches = $cnx->prepare("DELETE FROM tache where idList = ?");
+			$sqlTaches->bindValue(1, $idList);
+			$sqlTaches->execute();
+		}
 		
 		$sqlList = $cnx->prepare("DELETE FROM list where idList = ?");
-		$sqlList->bindValue(1, $list->id);
+		$sqlList->bindValue(1, $idList);
 		$sqlList->execute();
 	}
 
@@ -89,7 +92,7 @@
 			update();
 			break;
 		case 'DELETE':
-			delete();
+			delete($_GET['id']);
 			break;
 		default:
 			header("HTTP/1.0 405 Method Not Allowed");
