@@ -47,6 +47,8 @@
 		$sql = $cnx->prepare("INSERT INTO list (nomList) VALUES (?)");
 		$sql->bindValue(1, $list->nom);
 		$sql->execute();
+		
+		echo json_decode(true);
 	}
 	
 	function update()
@@ -59,6 +61,8 @@
 		$sql->bindValue(1, $list->nom);
 		$sql->bindValue(2, $list->idList);
 		$sql->execute();
+
+		echo json_decode(true);
 	}
 	
 	function delete($idList) {
@@ -78,6 +82,8 @@
 		$sqlList = $cnx->prepare("DELETE FROM list where idList = ?");
 		$sqlList->bindValue(1, $idList);
 		$sqlList->execute();
+
+		echo json_decode(true);
 	}
 
 	switch($request_method)
