@@ -50,6 +50,8 @@
 		$sql->bindValue(2, $tache->idType);
 		$sql->bindValue(3, $tache->idlist);
 		$sql->execute();
+
+		echo json_decode(true);
 	}
 	
 	function update()
@@ -64,6 +66,8 @@
 		$sql->bindValue(3, $tache->idList);
 		$sql->bindValue(4, $tache->id);
 		$sql->execute();
+
+		echo json_decode(true);
 	}
 	
 	function delete($idTache) {
@@ -75,6 +79,8 @@
 		$sql = $cnx->prepare("DELETE FROM tache where idTache = ?");
 		$sql->bindValue(1, $idTache);
 		$sql->execute();
+
+		echo json_decode(true);
 	}
 
 	switch($request_method)
