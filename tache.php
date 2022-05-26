@@ -61,19 +61,19 @@
 		$sql= $cnx->prepare("UPDATE tache set nomTache = ?, idType = ?, idList = ? where idTache = ?");
 		$sql->bindValue(1, $tache->nom);
 		$sql->bindValue(2, $tache->idType);
-		$sql->bindValue(3, $tache->idlist);
+		$sql->bindValue(3, $tache->idList);
 		$sql->bindValue(4, $tache->id);
 		$sql->execute();
 	}
 	
-	function delete() {
+	function delete($idTache) {
 		global $cnx;
 		
 		$json_str = file_get_contents('php://input');
 		$tache = json_decode($json_str);
 		
-		$sql= $cnx->prepare("DELETE FROM tache where idTache = ?");
-		$sql->bindValue(1, $tache->id);
+		$sql = $cnx->prepare("DELETE FROM tache where idTache = ?");
+		$sql->bindValue(1, $idTache);
 		$sql->execute();
 	}
 
@@ -89,7 +89,7 @@
 			update();
 			break;
 		case 'DELETE':
-			delete();
+			delete($_GET['id']);
 			break;
 		default:
 			header("HTTP/1.0 405 Method Not Allowed");
